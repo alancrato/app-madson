@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let item of items">
+    <ion-card *ngFor="let item of items" [routerLink]="'/post/'+item.id">
       <ion-card-content>
         {{item.title.rendered}}
       </ion-card-content>

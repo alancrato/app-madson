@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <ion-progress-bar *ngIf="searching === true" type="indeterminate"></ion-progress-bar>
+
+  <ion-card>
+    <ion-input [(ngModel)]="searchStr"></ion-input>
+  </ion-card>
+  <ion-button (click)="search()" style="margin-top: 5px;padding-top: 5px;">Search</ion-button>
+
+  <ion-list>
+    <ion-card *ngFor="let item of result" [routerLink]="'/post/'+item.id">
+      <ion-card-content>
+        {{item.title.rendered}}
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

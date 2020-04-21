@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'infinite',
     loadChildren: () => import('./infinite/infinite.module').then( m => m.InfinitePageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   }
 ];
 

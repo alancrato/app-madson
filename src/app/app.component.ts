@@ -21,6 +21,11 @@ export class AppComponent implements OnInit {
       title: 'Scroll',
       url: '/scroll',
       icon: 'airplane'
+    },
+    {
+      title: 'Infinite',
+      url: '/infinite',
+      icon: 'airplane'
     }
   ];
 

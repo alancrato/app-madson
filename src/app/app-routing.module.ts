@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'scroll',
     loadChildren: () => import('./scroll/scroll.module').then( m => m.ScrollPageModule)
+  },
+  {
+    path: 'infinite',
+    loadChildren: () => import('./infinite/infinite.module').then( m => m.InfinitePageModule)
   }
 ];
 

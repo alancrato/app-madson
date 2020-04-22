@@ -66,11 +66,11 @@ export class AppComponent implements OnInit {
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived().subscribe(() => {
-      // do something when notification is received
+      // do something when notification is received, log
     });
 
     this.oneSignal.handleNotificationOpened().subscribe(() => {
-      // do something when a notification is opened
+      // do something when a notification is opened, log
     });
 
     this.oneSignal.endInit();

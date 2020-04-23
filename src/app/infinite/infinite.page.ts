@@ -12,6 +12,7 @@ export class InfinitePage implements OnInit {
   page = 1;
   maximumPages = 100;
   items: any = [];
+  pubs: { id: 1, title: '*Publicidade', img: 'https://www.sitemiseria.com.br/banners_topo/juaco_cabecalho_03_fev_2020_mob.jpg'};
 
   constructor(
       private wordpressService: WpServiceService
@@ -29,6 +30,10 @@ export class InfinitePage implements OnInit {
       this.page++;
       this.wordpressService.getPosts(this.page)
           .subscribe(data => {
+            this.items.push({
+              title: '*Publicidade',
+              img: 'https://www.sitemiseria.com.br/banners_topo/juaco_cabecalho_03_fev_2020_mob.jpg'
+            });
             for (const item of data) {
               this.items.push(item);
             }

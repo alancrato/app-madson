@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
@@ -9,10 +9,13 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [ OneSignal ]
+  providers: [ Storage, OneSignal ]
 })
 export class AppComponent implements OnInit {
+
   public selectedIndex = 0;
+  push;
+
   public appPages = [
     {
       title: 'Home',
@@ -40,6 +43,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    public alertController: AlertController,
     private oneSignal: OneSignal
   ) {
     this.initializeApp();
@@ -49,19 +53,48 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.pushOneSignal();
+      if (!window.localStorage.getItem('push')) {
+        this.presentAlertConfirm().then(r => {});
+      } else {
+        this.pushOneSignal().then(r => {});
+      }
     });
   }
 
   ngOnInit() {
+    this.getStorage().then(r => {});
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
   }
 
-  pushOneSignal() {
-    this.oneSignal.startInit('fd4b579d-7db1-4f6b-a54f-94f54412a06f', '1096998048946');
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Deseja receber notificações?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Receber',
+          handler: () => {
+            this.setStorage();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+ async pushOneSignal() {
+    await this.oneSignal.startInit('fd4b579d-7db1-4f6b-a54f-94f54412a06f', '1096998048946');
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
@@ -74,5 +107,13 @@ export class AppComponent implements OnInit {
     });
 
     this.oneSignal.endInit();
+  }
+
+  async getStorage() {
+    await window.localStorage.getItem('push');
+  }
+
+  async setStorage() {
+    await window.localStorage.setItem('push', 'ok');
   }
 }

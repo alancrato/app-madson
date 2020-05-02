@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init app');
     this.getStorage().then(r => {});
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {

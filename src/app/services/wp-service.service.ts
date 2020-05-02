@@ -13,6 +13,18 @@ export class WpServiceService {
       return this.http.get(this.apiUrl + 'posts/?status=publish&page=' + page);
   }
 
+  public getPostIndex(): any {
+      return this.http.get(this.apiUrl + 'posts/?status=publish&categories=3&per_page=1');
+  }
+
+  public getPostsIndexOffset(): any {
+      return this.http.get(this.apiUrl + 'posts/?status=publish&per_page=6&offset=1');
+  }
+
+  public getPostsIndexOffsetInfinite(page: number): any {
+      return this.http.get(this.apiUrl + 'posts/?status=publish&offset=7&page' + page);
+  }
+
   public getPost(id: string): any {
       return this.http.get(this.apiUrl + 'posts/' + id);
   }
